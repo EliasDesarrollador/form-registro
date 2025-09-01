@@ -60,3 +60,30 @@ app.get('/usuarios', (req, res) => {
         res.json(result); // Devolvemos JSON a React
     });
 });
+
+// Actualizar usuario (solo nombre y correo)
+app.put('/api/usuario/:id', (req, res) => {
+  const { id } = req.params;
+  const { nombre, correo } = req.body; // 👈 correo en vez de email
+
+  db.query(
+    'UPDATE usuarios SET nombre = ?, correo = ? WHERE id = ?',
+    [nombre, correo, id],
+    (err, result) => {
+      if (err) return res.status(500).send('Error al actualizar usuario');
+      res.send('Usuario actualizado');
+    }
+  );
+});
+
+
+
+// Traer usuario por ID
+app.get('/api/usuario/:id', (req, res) => {
+  const { id } = req.params;
+  db.query('SELECT * FROM usuarios WHERE id = ?', [id], (err, result) => {
+    if (err) return res.status(500).send('Error al buscar usuario');
+    if (result.length === 0) return res.status(404).send('Usuario no encontrado');
+    res.json(result[0]);
+  });
+});
