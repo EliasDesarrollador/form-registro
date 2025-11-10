@@ -11,7 +11,8 @@ app.use(cors());
 app.use(express.json());
 
 
-// Conexion a MYSQL
+// Conexion a MYSQL DB Local
+// Prueba entorno local
 const db = mysql.createConnection({
     host:'localhost', //Direccion de nuestro servidor 
     user: 'usuario1', // Usuario que creamos 
